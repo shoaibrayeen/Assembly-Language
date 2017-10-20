@@ -5,7 +5,7 @@ DATA SEGMENT
 DATA ENDS
 
 CODE SEGMENT
-    ASSUME  DS:DATA 
+    ASSUME  DS:DATA  , CS:CODE
     
     START :
             MOV AX, DATA
@@ -18,16 +18,16 @@ CODE SEGMENT
             
     NEXT:
             XOR AX,AX 
-		    MOV AL,PACKED[SI]
-		    MOV AH,PACKED[SI]
-		    INC SI      
-		    ROR AH,4
-		    AND AL,DL
-		    AND AH,DL
-		    MOV UNPACKED[DI], AH
-		    INC DI
-		    MOV UNPACKED[DI],AL
-		    INC DI
+	    MOV AL,PACKED[SI]
+	    MOV AH,PACKED[SI]
+            INC SI      
+	    ROR AH,4
+	    AND AL,DL
+	    AND AH,DL
+	    MOV UNPACKED[DI], AH
+	    INC DI
+	    MOV UNPACKED[DI],AL
+	    INC DI
             LOOP NEXT
 CODE ENDS  
     END START
