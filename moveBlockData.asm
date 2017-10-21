@@ -1,28 +1,30 @@
-;code to move a block of data from one memory location to another
+;THIS ASSEMBLY CODE MOVE A BLOCK OF DATA FROM ONE MEMORY LOCATION TO ANOTHER
 
-data segment
-    array1 db 01h,03h,04h,05h,06h
-    array2 db 5dup(0) 
+DATA SEGMENT                        ;A SEGMENT NAMED AS DATA
 
-data ends
+    ARRAY1 DB 01H,03H,04H,05H,06H   ; INITIALIZING THE ELEMENTS OF ARRAY1
+    ARRAY2 DB 5DUP(0)               ; INITIALIZING THE ELEMENTS OF ARRAY2 BY 0
 
-code segment
-    assume ds:data , cs:code  ;associates segments with the segment registers
-    start:
-          mov ax,data
-          mov ds,ax         ;transfers address of data segment to data segment register
-          mov si,0
-          mov di,0
+DATA ENDS                           ; END OF DATA SEGMENT
+
+CODE SEGMENT                        ; A SEGMENT NAMED AS CODE
+
+    ASSUME DS:DATA , CS:CODE  
+    ;INFORM TO ASSEMBLER THAT DATA SEGMENT IS ASSOCIATED WITH DS AND CODE SEGMENT IS ASSOCIATED WITH CS
+    
+    START:                          ; MAIN OF THE PROGRAM
+            MOV AX , DATA
+            MOV DS , AX             ; LOADS DS WITH THE ADDRESS OF DATA SEGMENT
+            
+            LEA BX , ARRAY1         ; LOADS EFFECTIVE ADDRESS OF ARRAY1 TO BX REGISTER
+            LEA BP , ARRAY2         ; LOADS EFFECTIVE ADDRESS OF ARRAY2 TO BP REGISTER
+            MOV CX , 05H            ; CX IS INTIALIZED WITH 5 TO EXECUTE LOOP 5 TIMES
+    NEXT: 
+            MOV AL , BX[SI]         ; MOVE THE CONTENT AVAILABLE AT LOCATION [BX + SI ] TO AL REGISTER
+            MOV BP[DI] , AL         ; MOVE THE CONTENT OF AL TO LOCATION [ BP + DI ] 
+            INC SI                  ; SI IS INCREMENTED BY 1
+            INC DI                  ; DI IS INCREMENTED BY 1
+            LOOP NEXT               ; REPEAT TILL CX = 0H
           
-          lea bx,array1     ;loads effective address of memory loaction named array1 to bx register
-          lea bp,array2     ;loads effective address of memory loaction named array2 to bp register
-          
-          mov cx,05h        ;number of times the loop to be executed
-     next: 
-          mov al,bx[si]     ;copies the byte content addressed by bx and si registers to al register
-          mov bp[di],al     ;copies the content of al register to memory location addressed by bp and di registers
-          inc si            ; si=si+1
-          inc di            ; di=di+1
-          loop next        ;repeat until cx is nonzero
- code ends
-      end start
+ CODE ENDS                          ; END OF CODE SEGMENT
+    END START                       ; END OF PRORAM
