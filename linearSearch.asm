@@ -30,11 +30,12 @@ CODE SEGMENT                            ; A SEGMENT NAMED AS CODE
             JMP NOTFOUND                ; AFTER ENDING OF LOOP JUMP TO NOTFOUND LABEL
             
     FOUND: 
-            INC SI                      ; SI IS INCREMENTED BY 1
             MOV INDEX , SI              ; MOVE THE VALUE OF SI REGISTER TO INDEX AFTER FINDING THE ELEMENT IN ARRAY
+            JMP EXIT
             
     NOTFOUND:
-            MOV INDEX , FFFFH           ; MOVE -1 TO INDEX AFTER NOT FINDING THE ELEMENT IN ARRAY
-     
+            MOV INDEX , -1           ; MOVE -1 TO INDEX AFTER NOT FINDING THE ELEMENT IN ARRAY
+ 
+ EXIT
  CODE ENDS                              ; END OF CODE SEGMENT
     END START                           ; END OF PRORAM 
