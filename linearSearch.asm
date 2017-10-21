@@ -4,7 +4,7 @@ DATA SEGMENT                            ; A SEGMENT NAMED AS DATA
 
     ARRAY     DB 09H,04H,06H,03H,08H    ; INITIALIZING THE ELEMENTS OF ARRAY
     ELEMENT   DB 03H                    ; THE ELEMENT WHICH WE WANT TO SEARCH
-    INDEX     DW ?                      ; AT WHICH LOCATION ELEMENT IS FOUND
+    INDEX     DW ?                      ; VARIABLE TO SAVE THE INDEX FOR SEARCHING ELEMENT
 DATA ENDS                               ; END OF DATA SEGMENT
 
 CODE SEGMENT                            ; A SEGMENT NAMED AS CODE
