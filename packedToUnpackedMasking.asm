@@ -1,7 +1,6 @@
 DATA SEGMENT                
-    PACKED      DB  78h,56h,34h,12h,13h,54h,28h,94h
-    UNPACKED    DB  16 DUP(?)   
-    
+    PACKED      DB  78H,56H,34H,12H,13H,54H,28H,94H			;PACKED NUMBER
+    UNPACKED    DB  16 DUP(?)       					;UNPACKED NUMBER
 DATA ENDS
 
 CODE SEGMENT
@@ -12,7 +11,7 @@ CODE SEGMENT
             MOV DS, AX
             
             MOV CX,8H
-            MOV DL,0FH
+            MOV DL,0FH							;MASK : 00001111
             MOV SI,0 
             MOV DI,0 
             
@@ -30,4 +29,4 @@ CODE SEGMENT
 	    INC DI
             LOOP NEXT
 CODE ENDS  
-    END START
+END START
