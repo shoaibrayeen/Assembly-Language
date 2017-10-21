@@ -1,46 +1,44 @@
-;This assembly code finds the sum of double word sized elements of array of length ten
+;THIS ASSEMBLY CODE COMPUTES THE SUM OF DOUBLE WORD SIZED ELEMENTS OF ARRAY OF LENGTH TEN
 
+DATA SEGMENT                         ;A SEGMENT NAMED AS DATA
 
-data segment                  ;starts data segment named data
-    index db 10h              ;preassigns constant 10 i.e.size of array to index variable
-    sum dd ?                  ;reserves a 4byte space to sum
-    array dd 1234543h,21234211h,45732114h,32444h,222222h,12345678h,765432h,9076CA2h,AB3421Fh,4682ADh  ;preassigns ten constants to 40 consecutive bytes and associates variable "array"
-data ends                     ;end of data segment
+    SUM     DD 0H                    ;TO STORE THE SUM OF ARRAY ELEMENT 
+    ARRAY   DD 3022546H , 1243H , 23456789H , 12345H , 342876H , 66798123H , D5432H , 62H , 421FH , 4682H  
+    ;INITIALIZING THE ELEMENT OF ARRAY
 
-code segment                  ;start code segment named code
+DATA ENDS                            ;END OF DATA SEGMENT
+
+CODE SEGMENT                         ;A SEGMENT NAMED AS DATA
     
-      assume ds:data,cs:code        ;inform the assembler that address of data is in ds and that of code is in cs registers
- start:                       ; start of code
-      mov ax,data
-      mov ds,ax               ;loads ds with address of data segment
-      mov ax,0 
-      mov si,0h
-      lea bx,array            ;loads effective address of array to bx register
+    ASSUME DS:DATA,CS:CODE        
+;INFORM THE ASSEMBLER THAT DATA SEGMENT IS ASSOCIATED WITH DS AND CODE SEGMENT IS ASSOCIATED WITH CS
 
-      add ax,word ptr bx[si]  ;adds to ax lower order word of first double word element
-      mov word ptr sum,ax     ;transfers the sum of above result in lower order word of sum
-      mov ax,0h
-      add ax,word ptr bx[si+2];adds to ax the higher order word of first element of array
-      mov word ptr sum+2,ax
+    START:                           ; MAIN OF PROGRAM
+    
+            MOV AX , DATA
+            MOV DS , AX                ;LOADS DS WITH THE ADDRESS OF DATA SEGMENT
+            
+            XOR AX , AX
+            MOV SI , 0H
+            LEA BX , ARRAY             ;LOADS EFFECTIVE ADDRESS OF ARRAY TO BX REGISTER
+            MOV CX , 0AH               ;CX IS INTIALIZED WITH 10 TO EXECUTE LOOP 10 TIMES
+            
+    NEXT:  
+            MOV AX , WORD PTR SUM      ;MOVE LOWER 16 BITS OF SUM TO AX   
+            ADC AX , WORD PTR BX[SI]   ;ADD LOWER 16 BITS OF ARRAY ELEMENTS WITH AX
+            MOV WORD PTR SUM , AX      ;STORE CONTENT OF AX TO LOWER 16 BITS OF SUM 
+            
+            MOV AX , WORD PTR SUM+2    ;MOVE HIGHER 16 BITS OF SUM TO AX
+            ADC AX , WORD PTR BX[SI+2] ;ADD HIGHER 16 BITS OF ARRAY ELEMENTS WITH AX
+            MOV WORD PTR SUM+2 , AX    ;STORE CONTENT OF AX TO LOWER 16 BITS OF SUM 
+            INC SI
+            INC SI
+            INC SI                   ;INCREMENT SI BY 4 TO MOVE TO THE NEXT ELEMENT OF THE ARRAY
+            INC SI
+            LOOP NEXT                ;REPEAT TILL CX = 0H
  
-      mov cx,9h               ;number of times the loop to be executed is transfered in cx register
- next:  
-       inc si
-       inc si
-       inc si
-       inc si                 ; to move to the next element of the array
-       mov ax,word ptr sum    
-       adc ax,word ptr bx[si] ; adds to ax lower order word of first double word elemen
-                              
-       
-       mov word ptr sum,ax     ;transfers the sum of above result in lower order word of sum
-       mov ax,word ptr sum+2
-       adc ax,word ptr bx[si+2] 
-       mov word ptr sum+2,ax  
-       loop next                ;repeat if cx is nonzero
- 
-code ends                      ;end of code segment
-       end start                     ;end of proram
+CODE ENDS                            ;END OF CODE SEGMENT
+    END START                        ;END OF PRORAM
 
 
 
